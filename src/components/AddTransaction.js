@@ -1,25 +1,43 @@
 import React, { useState, useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 
-export const AddTransaction = () => {
+import { toast } from "react-toastify";
 
+
+
+export const AddTransaction = ({notify}) => {
   const { addTransaction } = useContext(GlobalContext)
 
   const [text, setText] = useState("")
   const [amount, setAmount] = useState(0)
 
   const onSubmit = e => {
+
     e.preventDefault()
 
-    const newTransaction = {
-      id: Math.floor(Math.random() * 100000000),
-      text,
-      amount: Number(amount)
+    if (text !== "" && amount !== 0) {
+      const newTransaction = {
+        id: Math.floor(Math.random() * 100000000),
+        text,
+        amount: Number(amount)
+      }
+
+      addTransaction(newTransaction)
+      setText("")
+      setAmount(0)
+    } else {
+      toast.warn('Wrong input detected! Try again.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
 
-    addTransaction(newTransaction)
-    setText("")
-    setAmount(0)
 
   }
 
