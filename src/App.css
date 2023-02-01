@@ -119,9 +119,21 @@ input[type='number'] {
   list-style-type: none;
   padding: 0;
   margin-bottom: 40px;
-  /* border: 1px solid black; */
+  border-radius: 5px;
   max-height: 200px;
+  overflow-y: scroll;
+  height: 600px;
+}
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.list {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .list li {
@@ -164,6 +176,7 @@ input[type='number'] {
   position: absolute;
   top: 50%;
   left: 0;
+  /* right: 10; */
   transform: translate(-100%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;

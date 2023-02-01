@@ -1,19 +1,23 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import AppReducer from './AppReducer'
 
 const initialState = {
-    transactions: [
-        { id: 1, text: 'Electricity Bills', amount: -20 },
-        { id: 2, text: 'Shopify Income', amount: 300 },
-    ]
+    transactions: []
 }
 
+const APP_LOCAL_STORAGE = 'app-local-storage';
 
 export const GlobalContext = createContext(initialState)
 
 export const GlobalProvider = ({children}) => {
+    const [state, dispatch] = useReducer(AppReducer, initialState, () => {
+        const localData = localStorage.getItem(APP_LOCAL_STORAGE);
+        return localData ? JSON.parse(localData) : initialState;
+    });
 
-    const [state, dispatch] = useReducer(AppReducer, initialState)
+    useEffect(() => {
+        localStorage.setItem(APP_LOCAL_STORAGE, JSON.stringify(state));
+    }, [state]);
 
     function deleteTransaction(id) {
         dispatch({

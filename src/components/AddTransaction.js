@@ -3,8 +3,6 @@ import { GlobalContext } from '../context/GlobalState'
 
 import { toast } from "react-toastify";
 
-
-
 export const AddTransaction = ({notify}) => {
   const { addTransaction } = useContext(GlobalContext)
 
@@ -46,8 +44,15 @@ export const AddTransaction = ({notify}) => {
     <h3>Add new transaction</h3>
       <form id="form" onSubmit={onSubmit}>
         <div className="form-control">
-          <label htmlFor="text">Text</label>
-          <input type="text" value={text} onChange={({target}) => setText(target.value)} placeholder="Enter text..." />
+          <label htmlFor="text">Category</label>
+          <input type="text" value={text} onChange={({target}) => setText(target.value)} placeholder="Enter category..." list='transaction-names' />
+          <datalist id="transaction-names" >
+            {['Car', 'Clothes', 'Entertainment', 'Extra income', 'Gifts', 'House bills', 'Investment', 'Salary', 'Savings', 'Shopping', 'Travel'].map(
+              (item, i) => <option key={i} value={item}>{item}</option>
+            )}
+        
+          </datalist>
+
         </div>
         <div className="form-control">
           <label htmlFor="amount">Amount <br />(negative - expense, positive - income)</label>
